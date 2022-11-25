@@ -20,4 +20,6 @@ After users add their new order, they can move the order to the next step by jus
 
 ![image](https://user-images.githubusercontent.com/40501852/203943963-67bcec09-3623-41f7-8929-2718ab44a65b.png)
 
+I also added end-to-end test with Cypress to the repo lately... 
+
 And that's all! You can try it out from this demo link too: [Case Study](http://roofcase.hicaku.com/)
