@@ -12,7 +12,7 @@ Other options are arbitrary to fill.
 
 ![image](https://user-images.githubusercontent.com/40501852/203943634-529ee08c-9d39-4d8f-890b-98aaa6af431b.png)
 
-In the **Order Items** section, I was told to create a custom combobox for selecting the meals. I did not use any external packages, I coded that section by myself.
+In the **Order Items** section, I was told to create a custom combobox for selecting the meals. **I did not use any external packages, I coded that section by myself.**
 
 ![image](https://user-images.githubusercontent.com/40501852/203943886-c4a50f61-9f3b-4ce6-8db7-aa5e3aa9c621.png)
 
@@ -20,6 +20,7 @@ After users add their new order, they can move the order to the next step by jus
 
 ![image](https://user-images.githubusercontent.com/40501852/203943963-67bcec09-3623-41f7-8929-2718ab44a65b.png)
 
+I used pinia-persisted plugin for persisted data.
 I also added end-to-end test with Cypress to the repo lately... 
 
 And that's all! You can try it out from this demo link too: [Case Study](http://roofcase.hicaku.com/)
