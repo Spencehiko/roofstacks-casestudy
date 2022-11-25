@@ -199,8 +199,10 @@ export const useOrderStore = defineStore({
             this.ordersToList = this.orders.filter(
                 (order: Order) => order.status === status
             );
-            console.log("this.orders", this.orders);
-            console.log("this.ordersToList", this.ordersToList);
+        },
+        getOrderCountByStatus(status: string): number {
+            return this.orders.filter((order: Order) => order.status === status)
+                .length;
         },
     },
     getters: {

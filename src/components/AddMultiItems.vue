@@ -52,7 +52,7 @@ const toggleItem = (itemId: number) => {
             class="border border-navbar rounded-md px-5 py-1"
         >
             <div
-                class="flex flex-row gap-5"
+                class="flex flex-row"
                 v-for="orderItem in orderItems"
                 :key="orderItem.id"
             >
@@ -74,8 +74,11 @@ const toggleItem = (itemId: number) => {
                 v-for="addedItem in addedItems"
                 :key="addedItem.id"
             >
-                <span>{{ addedItem.name }}</span>
-                <div class="flex flex-row gap-6">
+                <span
+                    class="w-full max-w-50 xs:max-w-33perc sm:max-w-200 text-ellipsis overflow-hidden whitespace-nowrap"
+                    >{{ addedItem.name }}</span
+                >
+                <div class="flex flex-row gap-2 sm:gap-6">
                     <span>{{ "$" + addedItem.price * addedItem.count }}</span>
                     <div
                         class="flex flex-row gap-3 px-3 border border-blue-500 rounded-full w-20 justify-between"

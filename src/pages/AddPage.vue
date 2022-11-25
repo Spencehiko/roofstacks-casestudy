@@ -2,7 +2,7 @@
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-import AddMultiItems from "../components/AddMultiItems.vue";
+import AddMultiItems from "@/components/AddMultiItems.vue";
 
 const store = useOrderStore();
 const { lastOrderNumber, currentDateAndTime, addOrder } = store;
@@ -28,21 +28,23 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="p-5">
+    <div class="p-2 sm:p-8">
         <div class="flex flex-row gap-5 items-center mb-8">
             <img src="@/assets/hamburger.png" class="w-3 h-3" />
             <span class="font-sfprodisplaybold text-xl">CREATE ORDER</span>
         </div>
-        <div class="flex flex-row">
-            <div class="flex flex-col gap-5 flex-1 border-r border-navbar pr-8">
-                <div class="flex flex-row">
-                    <span class="w-40 font-bold">Order Number:</span>
+        <div class="flex flex-col sm:flex-row">
+            <div
+                class="flex flex-col gap-5 flex-1 border-navbar sm:pr-8 sm:border-r"
+            >
+                <div class="flex flex-row gap-2 sm:gap-0">
+                    <span class="sm:w-40 font-bold">Order Number:</span>
                     <span class="text-darkGray">{{
                         "#" + inputFields.orderNumber
                     }}</span>
                 </div>
                 <div class="flex flex-row">
-                    <span class="w-40 font-bold">Date & Time:</span>
+                    <span class="sm:w-40 font-bold">Date & Time:</span>
                     <span class="text-darkGray">{{ inputFields.date }}</span>
                 </div>
                 <div class="flex flex-col gap-3">
@@ -67,7 +69,7 @@ onMounted(() => {
                 </div>
                 <div class="flex flex-col gap-3">
                     <span class="font-bold">Trans Type</span>
-                    <div class="flex flex-row gap-10">
+                    <div class="flex flex-row gap-2 sm:gap-10">
                         <div class="flex flex-row gap-2">
                             <input
                                 type="radio"
@@ -103,8 +105,8 @@ onMounted(() => {
                     <AddMultiItems />
                 </div>
             </div>
-            <div class="pl-8 flex-1">
-                <div class="bg-navbar p-5 rounded-lg">
+            <div class="mt-5 sm:mt-0 sm:pl-8 flex-1">
+                <div class="hidden sm:block bg-navbar p-5 rounded-lg">
                     <span class="font-bold">Delivery Details</span>
                     <table class="w-full mt-3">
                         <tr>
@@ -117,7 +119,11 @@ onMounted(() => {
                             </th>
                         </tr>
                         <tr v-for="addedItem in addedItems" :key="addedItem.id">
-                            <td>{{ addedItem.name }}</td>
+                            <td
+                                class="w-full text-ellipsis overflow-hidden whitespace-nowrap"
+                            >
+                                {{ addedItem.name }}
+                            </td>
                             <td class="text-center">{{ addedItem.count }}</td>
                             <td class="text-right">
                                 {{ addedItem.count * addedItem.price }}

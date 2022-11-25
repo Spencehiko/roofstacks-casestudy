@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import { orderTypes } from "@/stores/orders";
+import { useOrderStore, orderTypes } from "@/stores/orders";
+
+const store = useOrderStore();
+const { getOrderCountByStatus } = store;
 </script>
 
 <template>
-    <div class="flex flex-row min-h-screen font-sfprodisplay bg-app">
-        <div class="flex flex-col gap-5 w-20 items-center bg-logos">
+    <div
+        class="flex flex-row min-h-screen font-sfprodisplay bg-app overflow-x-hidden"
+    >
+        <div class="hidden md:flex flex-col gap-5 w-20 items-center bg-logos">
             <div class="p-2 w-full">
                 <img src="@/assets/logo.png" alt="Logo" />
             </div>
@@ -20,7 +25,7 @@ import { orderTypes } from "@/stores/orders";
             </div>
         </div>
         <nav
-            class="flex flex-col gap-5 w-60 p-5 bg-navbar border border-navbar"
+            class="p-1 sm:p-5 flex flex-col gap-5 w-44 bg-navbar border border-navbar overflow-hidden"
         >
             <span class="mb-2 text-2xl font-bold">Orders</span>
             <RouterLink to="/" active-class="text-active">New Order</RouterLink>
@@ -32,11 +37,14 @@ import { orderTypes } from "@/stores/orders";
                 <RouterLink
                     :to="'/orders/' + orderLink"
                     active-class="text-active"
+                    class="text-ellipsis overflow-hidden whitespace-nowrap"
                     >{{ order.header }}</RouterLink
                 >
-                <span class="text-lightGray">{{ order.count }}</span>
+                <span class="text-lightGray">{{
+                    getOrderCountByStatus(orderLink.toString())
+                }}</span>
             </div>
         </nav>
-        <RouterView class="w-full p-8" />
+        <RouterView class="w-full" />
     </div>
 </template>
