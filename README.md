@@ -1,68 +1,23 @@
-# roofstacks-case
+# Roof Stacks - Case Study
 
-This template should help get you started developing with Vue 3 in Vite.
+This case study app is for, basically, creating new orders for an imaginary restaurant and handle their status in the app. 
 
-## Recommended IDE Setup
+Users can create new orders but there are some rules before they can add:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- A non-empty name must be entered
+- A non-empty contact must be entered
+- At least one meal must be selected
 
-## Type Support for `.vue` Imports in TS
+Other options are arbitrary to fill.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+![image](https://user-images.githubusercontent.com/40501852/203943634-529ee08c-9d39-4d8f-890b-98aaa6af431b.png)
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+In the **Order Items** section, I was told to create a custom combobox for selecting the meals. I did not use any external packages, I coded that section by myself.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+![image](https://user-images.githubusercontent.com/40501852/203943886-c4a50f61-9f3b-4ce6-8db7-aa5e3aa9c621.png)
 
-## Customize configuration
+After users add their new order, they can move the order to the next step by just clicking the button below that says **"Move to ..."**
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![image](https://user-images.githubusercontent.com/40501852/203943963-67bcec09-3623-41f7-8929-2718ab44a65b.png)
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
-
-```sh
-npm run test:unit:dev # or `npm run test:unit` for headless testing
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+And that's all! You can try it out from this demo link too: [Case Study](http://roofcase.hicaku.com/)
