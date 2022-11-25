@@ -1,4 +1,5 @@
-import AddPageVue from "../../pages/AddPage.vue";
+import { mount } from "@vue/test-utils";
+import AddPageVue from "../pages/AddPage.vue";
 
 describe("AddPageVue", () => {
     it("Checks App", () => {
