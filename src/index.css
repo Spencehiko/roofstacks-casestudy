@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "SFPRODISPLAY";
+    src: url("./assets/fonts/SFPRODISPLAYREGULAR.OTF");
+}
+@font-face {
+    font-family: "SFPRODISPLAYBOLD";
+    src: url("./assets/fonts/SFPRODISPLAYBOLD.OTF");
+}
+@font-face {
+    font-family: "SFPRODISPLAYMEDIUM";
+    src: url("./assets/fonts/SFPRODISPLAYMEDIUM.OTF");
+}
