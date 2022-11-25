@@ -11,6 +11,7 @@ interface Order {
     contact: String;
     transferType: "delivery" | "takeaway";
     message: any; // because of textarea
+    items?: OrderItem[];
     total?: number;
     status?: "accepted" | "cooking" | "parcelReady" | "delivered" | "completed";
 }
@@ -19,6 +20,7 @@ interface OrderItem {
     id: number;
     name: string;
     price: number;
+    count: number;
 }
 
 export const orderTypes = {
@@ -141,6 +143,10 @@ export const useOrderStore = defineStore({
         ordersToList: [] as Order[],
     }),
     actions: {
+        goToAdd() {
+            // @ts-ignore
+            this.router.push({ path: "/" });
+        },
         addNewItem(itemId: number): void {
             const { name, price } = this.getItemNameAndPrice(itemId);
             this.addedItems.push({
@@ -187,7 +193,10 @@ export const useOrderStore = defineStore({
             this.addedItems[index].count++;
         },
         addOrder() {
-            const newOrder = JSON.parse(JSON.stringify(this.inputFields));
+            const newOrder: Order = JSON.parse(
+                JSON.stringify(this.inputFields)
+            );
+            newOrder.items = JSON.parse(JSON.stringify(this.addedItems));
             newOrder.total = this.totalPrice;
             newOrder.status = "accepted";
             this.orders.push(newOrder);
@@ -203,6 +212,45 @@ export const useOrderStore = defineStore({
         getOrderCountByStatus(status: string): number {
             return this.orders.filter((order: Order) => order.status === status)
                 .length;
+        },
+        getNextStep(currentStatus: string) {
+            let stringToReturn: string = "";
+            switch (currentStatus) {
+                case "accepted":
+                    stringToReturn = "Cooking";
+                    break;
+                case "cooking":
+                    stringToReturn = "Parcel Ready";
+                    break;
+                case "parcelReady":
+                    stringToReturn = "Delivered";
+                    break;
+                case "delivered":
+                    stringToReturn = "Completed";
+                    break;
+            }
+            return stringToReturn;
+        },
+        moveToNextStep(orderNumber: number) {
+            const index = this.orders.findIndex(
+                (order: Order) => order.orderNumber === orderNumber
+            );
+            const currentStatus = this.orders[index].status;
+            switch (currentStatus) {
+                case "accepted":
+                    this.orders[index].status = "cooking";
+                    break;
+                case "cooking":
+                    this.orders[index].status = "parcelReady";
+                    break;
+                case "parcelReady":
+                    this.orders[index].status = "delivered";
+                    break;
+                case "delivered":
+                    this.orders[index].status = "completed";
+                    break;
+            }
+            this.updateOrdersToList(currentStatus || "accepted");
         },
     },
     getters: {

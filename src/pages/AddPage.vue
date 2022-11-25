@@ -31,7 +31,7 @@ onMounted(() => {
     <div class="p-2 sm:p-8">
         <div class="flex flex-row gap-5 items-center mb-8">
             <img src="@/assets/hamburger.png" class="w-3 h-3" />
-            <span class="font-sfprodisplaybold text-xl">CREATE ORDER</span>
+            <span class="font-sfprodisplaybold text-xl">Create Order</span>
         </div>
         <div class="flex flex-col sm:flex-row">
             <div

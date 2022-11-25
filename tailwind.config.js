@@ -12,9 +12,11 @@ module.exports = {
                 app: "#FFF",
                 buttons: "#EBEBEB",
                 addGreen: "#0DC74E",
+                primary: "#2A71FA",
+                orange: "#FC7501",
             },
             textColor: {
-                active: "#2A71FA",
+                primary: "#2A71FA",
                 lightGray: "#B4B4B5",
                 darkGray: "#737376",
             },

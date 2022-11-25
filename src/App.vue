@@ -28,7 +28,9 @@ const { getOrderCountByStatus } = store;
             class="p-1 sm:p-5 flex flex-col gap-5 w-44 bg-navbar border border-navbar overflow-hidden"
         >
             <span class="mb-2 text-2xl font-bold">Orders</span>
-            <RouterLink to="/" active-class="text-active">New Order</RouterLink>
+            <RouterLink to="/" active-class="text-primary"
+                >New Order</RouterLink
+            >
             <div
                 v-for="(order, orderLink, index) in orderTypes"
                 :key="index"
@@ -36,7 +38,7 @@ const { getOrderCountByStatus } = store;
             >
                 <RouterLink
                     :to="'/orders/' + orderLink"
-                    active-class="text-active"
+                    active-class="text-primary"
                     class="text-ellipsis overflow-hidden whitespace-nowrap"
                     >{{ order.header }}</RouterLink
                 >
