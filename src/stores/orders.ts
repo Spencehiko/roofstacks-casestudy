@@ -141,12 +141,15 @@ export const useOrderStore = defineStore({
             price: number;
         }[],
         ordersToList: [] as Order[],
+        orderByPage: 10 as number,
     }),
     actions: {
+        /* Routing */
         goToAdd() {
             // @ts-ignore
             this.router.push({ path: "/" });
         },
+        /* Add */
         addNewItem(itemId: number): void {
             const { name, price } = this.getItemNameAndPrice(itemId);
             this.addedItems.push({
@@ -155,42 +158,6 @@ export const useOrderStore = defineStore({
                 count: 1,
                 price,
             });
-        },
-        removeItem(itemId: number): void {
-            const index = this.addedItems.findIndex((addedItem: any) => {
-                return addedItem.id === itemId;
-            });
-            this.addedItems.splice(index, 1);
-            if (this.addedItemIds.includes(itemId)) {
-                this.addedItemIds.splice(this.addedItemIds.indexOf(itemId), 1);
-            }
-        },
-        isNotAlreadyAdded(itemId: number): boolean {
-            return this.addedItemIds.includes(itemId);
-        },
-        getItemNameAndPrice(itemId: number): { name: string; price: number } {
-            const index = orderItems.findIndex((item) => item.id === itemId);
-
-            return {
-                name: orderItems[index].name,
-                price: orderItems[index].price,
-            };
-        },
-        decreaseCount(itemId: number) {
-            const index = this.addedItems.findIndex((addedItem: any) => {
-                return addedItem.id === itemId;
-            });
-            if (this.addedItems[index].count === 1) {
-                this.removeItem(itemId);
-            } else {
-                this.addedItems[index].count--;
-            }
-        },
-        increaseCount(itemId: number) {
-            const index = this.addedItems.findIndex((addedItem: any) => {
-                return addedItem.id === itemId;
-            });
-            this.addedItems[index].count++;
         },
         addOrder() {
             const newOrder: Order = JSON.parse(
@@ -204,10 +171,24 @@ export const useOrderStore = defineStore({
             // @ts-ignore
             this.router.push({ path: "/orders/accepted" });
         },
-        updateOrdersToList(status: string) {
-            this.ordersToList = this.orders.filter(
-                (order: Order) => order.status === status
-            );
+        /* Remove */
+        removeItem(itemId: number): void {
+            const index = this.addedItems.findIndex((addedItem: any) => {
+                return addedItem.id === itemId;
+            });
+            this.addedItems.splice(index, 1);
+            if (this.addedItemIds.includes(itemId)) {
+                this.addedItemIds.splice(this.addedItemIds.indexOf(itemId), 1);
+            }
+        },
+        /* Get */
+        getItemNameAndPrice(itemId: number): { name: string; price: number } {
+            const index = orderItems.findIndex((item) => item.id === itemId);
+
+            return {
+                name: orderItems[index].name,
+                price: orderItems[index].price,
+            };
         },
         getOrderCountByStatus(status: string): number {
             return this.orders.filter((order: Order) => order.status === status)
@@ -231,6 +212,42 @@ export const useOrderStore = defineStore({
             }
             return stringToReturn;
         },
+        isNotAlreadyAdded(itemId: number): boolean {
+            return this.addedItemIds.includes(itemId);
+        },
+        /* Update */
+        updateOrdersToList(status: string) {
+            this.ordersToList = this.orders.filter(
+                (order: Order) => order.status === status
+            );
+            if (this.orderByPage < this.ordersToList.length) {
+                this.ordersToList = this.ordersToList.slice(
+                    this.ordersToList.length - this.orderByPage
+                );
+            }
+        },
+        changeOrderByPage(count: number, status: string) {
+            this.orderByPage = count;
+            this.updateOrdersToList(status);
+        },
+        /* Item Count */
+        decreaseCount(itemId: number) {
+            const index = this.addedItems.findIndex((addedItem: any) => {
+                return addedItem.id === itemId;
+            });
+            if (this.addedItems[index].count === 1) {
+                this.removeItem(itemId);
+            } else {
+                this.addedItems[index].count--;
+            }
+        },
+        increaseCount(itemId: number) {
+            const index = this.addedItems.findIndex((addedItem: any) => {
+                return addedItem.id === itemId;
+            });
+            this.addedItems[index].count++;
+        },
+        /* Move to Next Step */
         moveToNextStep(orderNumber: number) {
             const index = this.orders.findIndex(
                 (order: Order) => order.orderNumber === orderNumber

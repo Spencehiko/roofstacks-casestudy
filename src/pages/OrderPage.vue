@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import { useOrderStore, orderTypes } from "@/stores/orders";
 import { storeToRefs } from "pinia";
-import { onMounted, watch } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 
 const store = useOrderStore();
-const { updateOrdersToList, moveToNextStep, getNextStep, goToAdd } = store;
-const { ordersToList } = storeToRefs(store);
+const {
+    updateOrdersToList,
+    moveToNextStep,
+    getNextStep,
+    goToAdd,
+    changeOrderByPage,
+} = store;
+const { ordersToList, orderByPage } = storeToRefs(store);
 
 watch(
     () => route.params.orderType,
@@ -17,9 +23,16 @@ watch(
     }
 );
 
+const isDropdownOpen = ref(false);
+
 onMounted(() => {
     updateOrdersToList(route.params.orderType.toString());
 });
+
+const changeCount = (count: number) => {
+    isDropdownOpen.value = false;
+    changeOrderByPage(count, route.params.orderType.toString());
+};
 </script>
 
 <template>
@@ -30,7 +43,45 @@ onMounted(() => {
                 orderTypes[$route.params.orderType.toString()].header
             }}</span>
         </div>
-        <div class="pb-8 border-b border-navbar mb-8 flex justify-end">
+        <div class="pb-8 border-b border-navbar mb-8 flex justify-between">
+            <div class="relative">
+                <button
+                    class="bg-navbar p-2 rounded flex flex-row gap-1 justify-center items-center"
+                    @click="isDropdownOpen = !isDropdownOpen"
+                >
+                    <img src="@/assets/hamburger.png" class="w-3 h-3" />
+                    <span>Showing {{ orderByPage }} Orders</span>
+                </button>
+                <div
+                    v-if="isDropdownOpen"
+                    class="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col gap-1 bg-blue-600 text-white"
+                >
+                    <button
+                        class="border-b border-navbar p-1"
+                        @click="changeCount(5)"
+                    >
+                        Show 5
+                    </button>
+                    <button
+                        class="border-b border-navbar p-1"
+                        @click="changeCount(10)"
+                    >
+                        Show 10
+                    </button>
+                    <button
+                        class="border-b border-navbar p-1"
+                        @click="changeCount(20)"
+                    >
+                        Show 20
+                    </button>
+                    <button
+                        class="border-b border-navbar p-1"
+                        @click="changeCount(50)"
+                    >
+                        Show 50
+                    </button>
+                </div>
+            </div>
             <button class="bg-primary text-white p-2 rounded" @click="goToAdd">
                 Add Order
             </button>
@@ -42,38 +93,38 @@ onMounted(() => {
                 :key="order.orderNumber"
             >
                 <div
-                    class="flex flex-col sm:flex-row gap-2 justify-between flex-wrap"
+                    class="flex flex-col lg:flex-row gap-2 justify-between flex-wrap"
                 >
                     <div
-                        class="flex flex-col sm:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
+                        class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Order Number</span>
                         <span>{{ "#" + order.orderNumber }}</span>
                     </div>
                     <div
-                        class="flex flex-col sm:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
+                        class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Date & Time</span>
-                        <span>{{ order.date }}</span>
+                        <span class="w-fit">{{ order.date }}</span>
                     </div>
                     <div
-                        class="flex flex-col sm:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
+                        class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Name</span>
-                        <span>{{ order.name }}</span>
+                        <span class="w-fit">{{ order.name }}</span>
                     </div>
                     <div
-                        class="flex flex-col sm:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
+                        class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Contact</span>
-                        <span>{{ order.contact }}</span>
+                        <span class="w-fit">{{ order.contact }}</span>
                     </div>
                     <div
-                        class="flex flex-col sm:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
+                        class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Trans Type</span>
                         <span
-                            class="first-letter:uppercase p-1 rounded text-center text-white w-fit sm:w-1/2"
+                            class="first-letter:uppercase p-1 rounded text-center text-white w-fit"
                             :class="[
                                 order.transferType === 'delivery'
                                     ? 'bg-primary'
@@ -104,11 +155,14 @@ onMounted(() => {
                         <span class="text-darkGray"
                             >Additional Information from Customer</span
                         >
-                        <p>{{ order.message }}</p>
+                        <p>{{ order.message || "-" }}</p>
                     </div>
                     <button
                         class="bg-primary text-white px-1 py-2 rounded mt-5 sm:mt-0"
                         @click="moveToNextStep(order.orderNumber)"
+                        v-if="
+                            $route.params.orderType.toString() !== 'completed'
+                        "
                     >
                         Move to
                         {{ getNextStep($route.params.orderType.toString()) }}
