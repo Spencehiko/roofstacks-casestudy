@@ -31,7 +31,9 @@ onMounted(() => {
     <div class="p-2 sm:p-8">
         <div class="flex flex-row gap-5 items-center mb-8">
             <img src="@/assets/hamburger.png" class="w-3 h-3" />
-            <span class="font-sfprodisplaybold text-xl">Create Order</span>
+            <span class="font-sfprodisplaybold text-xl" data-cy="addHeader"
+                >Create Order</span
+            >
         </div>
         <div class="flex flex-col sm:flex-row">
             <div
@@ -39,7 +41,7 @@ onMounted(() => {
             >
                 <div class="flex flex-row gap-2 sm:gap-0">
                     <span class="sm:w-40 font-bold">Order Number:</span>
-                    <span class="text-darkGray">{{
+                    <span class="text-darkGray" data-cy="firstOrderNumber">{{
                         "#" + inputFields.orderNumber
                     }}</span>
                 </div>
@@ -55,6 +57,7 @@ onMounted(() => {
                         type="text"
                         v-model="inputFields.name"
                         class="px-5 py-1 outline-none border-2 border-navbar rounded-md"
+                        data-cy="inputName"
                     />
                 </div>
                 <div class="flex flex-col gap-3">
@@ -65,6 +68,7 @@ onMounted(() => {
                         type="text"
                         v-model="inputFields.contact"
                         class="px-5 py-1 outline-none border-2 border-navbar rounded-md"
+                        data-cy="inputContact"
                     />
                 </div>
                 <div class="flex flex-col gap-3">
@@ -135,13 +139,14 @@ onMounted(() => {
                     class="flex flex-row justify-between bg-navbar p-5 rounded-lg mt-5 text-xl"
                 >
                     <span class="font-bold">Total Amount:</span>
-                    <span>{{ "$" + totalPrice }}</span>
+                    <span data-cy="totalPrice">{{ "$" + totalPrice }}</span>
                 </div>
                 <div class="flex flex-row justify-end mt-5">
                     <button
                         class="bg-addGreen text-white rounded w-1/2 py-2 text-xl transition-all duration-300 hover:bg-green-700 disabled:cursor-not-allowed"
                         :disabled="isAddButtonDisabled"
                         @click="addOrder"
+                        data-cy="addButton"
                     >
                         Add Order
                     </button>

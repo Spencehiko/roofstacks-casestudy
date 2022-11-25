@@ -46,7 +46,7 @@ const changeCount = (count: number) => {
         <div class="pb-8 border-b border-navbar mb-8 flex justify-between">
             <div class="relative">
                 <button
-                    class="bg-navbar p-2 rounded flex flex-row gap-1 justify-center items-center"
+                    class="bg-buttons p-2 rounded flex flex-row gap-1 justify-center items-center"
                     @click="isDropdownOpen = !isDropdownOpen"
                 >
                     <img src="@/assets/hamburger.png" class="w-3 h-3" />
@@ -82,7 +82,11 @@ const changeCount = (count: number) => {
                     </button>
                 </div>
             </div>
-            <button class="bg-primary text-white p-2 rounded" @click="goToAdd">
+            <button
+                class="bg-primary text-white p-2 rounded"
+                @click="goToAdd"
+                data-cy="goBackButton"
+            >
                 Add Order
             </button>
         </div>
@@ -99,7 +103,9 @@ const changeCount = (count: number) => {
                         class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Order Number</span>
-                        <span>{{ "#" + order.orderNumber }}</span>
+                        <span data-cy="orderNumber">{{
+                            "#" + order.orderNumber
+                        }}</span>
                     </div>
                     <div
                         class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
@@ -111,13 +117,17 @@ const changeCount = (count: number) => {
                         class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Name</span>
-                        <span class="w-fit">{{ order.name }}</span>
+                        <span class="w-fit" data-cy="orderName">{{
+                            order.name
+                        }}</span>
                     </div>
                     <div
                         class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
                     >
                         <span class="text-darkGray">Contact</span>
-                        <span class="w-fit">{{ order.contact }}</span>
+                        <span class="w-fit" data-cy="orderContact">{{
+                            order.contact
+                        }}</span>
                     </div>
                     <div
                         class="flex flex-col lg:w-1/6 text-ellipsis overflow-hidden whitespace-nowrap"
@@ -135,7 +145,9 @@ const changeCount = (count: number) => {
                     </div>
                     <div class="flex flex-col">
                         <span class="text-darkGray">Amount</span>
-                        <span>{{ "$" + order.total }}</span>
+                        <span data-cy="orderAmount">{{
+                            "$" + order.total
+                        }}</span>
                     </div>
                 </div>
                 <div class="flex flex-row gap-3 items-center mt-10 flex-wrap">
@@ -144,6 +156,7 @@ const changeCount = (count: number) => {
                         v-for="(orderedItem, index) in order.items"
                         :key="index"
                         class="bg-buttons p-2"
+                        data-cy="orderItems"
                     >
                         {{ orderedItem.name + " X" + orderedItem.count }}
                     </span>
@@ -163,6 +176,7 @@ const changeCount = (count: number) => {
                         v-if="
                             $route.params.orderType.toString() !== 'completed'
                         "
+                        data-cy="moveToButton"
                     >
                         Move to
                         {{ getNextStep($route.params.orderType.toString()) }}

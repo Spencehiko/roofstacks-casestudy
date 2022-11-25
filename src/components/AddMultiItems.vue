@@ -31,6 +31,7 @@ const toggleItem = (itemId: number) => {
         <button
             class="px-5 py-1 outline-none border-2 border-navbar rounded-md flex flex-row justify-between items-center cursor-pointer w-full"
             @click="toggleItemsMenu"
+            data-cy="inputItems"
         >
             <span v-if="addedItemIds.length === 0"> Select Items </span>
             <span v-else>
@@ -75,7 +76,7 @@ const toggleItem = (itemId: number) => {
                 :key="addedItem.id"
             >
                 <span
-                    class="w-full max-w-50 xs:max-w-33perc sm:max-w-200 text-ellipsis overflow-hidden whitespace-nowrap"
+                    class="w-full max-w-33perc sm:max-w-200 text-ellipsis overflow-hidden whitespace-nowrap"
                     >{{ addedItem.name }}</span
                 >
                 <div class="flex flex-row gap-2 sm:gap-6">
@@ -83,12 +84,18 @@ const toggleItem = (itemId: number) => {
                     <div
                         class="flex flex-row gap-3 px-3 border border-blue-500 rounded-full w-20 justify-between"
                     >
-                        <button @click="decreaseCount(addedItem.id)">-</button>
+                        <button
+                            @click="decreaseCount(addedItem.id)"
+                            data-cy="decreaseButton"
+                        >
+                            -
+                        </button>
                         <span>{{ addedItem.count }}</span>
                         <button
                             :disabled="addedItem.count === 9"
                             @click="increaseCount(addedItem.id)"
                             class="disabled:cursor-not-allowed"
+                            data-cy="increaseButton"
                         >
                             +
                         </button>
