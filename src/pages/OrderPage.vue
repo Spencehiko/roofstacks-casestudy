@@ -54,7 +54,7 @@ const changeCount = (count: number) => {
                 </button>
                 <div
                     v-if="isDropdownOpen"
-                    class="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col gap-1 bg-blue-600 text-white"
+                    class="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col gap-1 bg-primary text-white w-full"
                 >
                     <button
                         class="border-b border-navbar p-1"

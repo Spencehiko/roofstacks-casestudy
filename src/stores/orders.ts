@@ -278,10 +278,18 @@ export const useOrderStore = defineStore({
         currentDateAndTime(): string {
             const date = new Date();
             const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
+            const month =
+                date.getMonth() + 1 >= 10
+                    ? date.getMonth() + 1
+                    : "0" + date.getMonth() + 1;
+            const day =
+                date.getDate() >= 10 ? date.getDate() : "0" + date.getDate();
+            const hours =
+                date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
+            const minutes =
+                date.getMinutes() >= 10
+                    ? date.getMinutes()
+                    : "0" + date.getMinutes();
             const ampm = hours >= 12 ? " PM" : " AM";
 
             return (

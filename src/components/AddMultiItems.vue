@@ -53,7 +53,7 @@ const toggleItem = (itemId: number) => {
             class="border border-navbar rounded-md px-5 py-1"
         >
             <div
-                class="flex flex-row"
+                class="flex flex-row gap-2"
                 v-for="orderItem in orderItems"
                 :key="orderItem.id"
             >
